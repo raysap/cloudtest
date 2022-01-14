@@ -32,3 +32,13 @@ BEGIN
 
     END LOOP;
 END;
+
+----------------decalring record---------
+
+declare
+r_jobs job_copy%rowtype;
+begin 
+select * into r_jobs from job_copy where job_id = 'AD_VP';
+dbms_output.put_line (r_jobs.min_salary);
+end;
+
