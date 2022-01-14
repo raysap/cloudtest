@@ -54,3 +54,20 @@ select job_copy.job_id,job_copy.job_title,job_history.end_date into r_jobs.job_i
 --r_jobs.job_id := 'AD_VP';or
 dbms_output.put_line (r_jobs.emp.end_date);
 end;
+-----------------------cursor------------------------
+
+DECLARE
+cursor c_jobs is select jobs.job_title,job_history.employee_id from jobs,job_history where jobs.job_id = job_history.job_id and  
+jobs.max_salary between 10000 and 20000;
+v_job_title jobs.job_title%type;
+v_emp_id job_history.employee_id%type;
+begin
+open c_jobs;
+FETCH c_jobs into v_job_title,v_emp_id;
+dbms_output.put_line (v_job_title||' '||v_emp_id);
+FETCH c_jobs into v_job_title,v_emp_id;
+dbms_output.put_line (v_job_title||' '||v_emp_id);
+FETCH c_jobs into v_job_title,v_emp_id;
+dbms_output.put_line (v_job_title||' '||v_emp_id);
+close c_jobs;
+end;
