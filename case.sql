@@ -71,3 +71,15 @@ FETCH c_jobs into v_job_title,v_emp_id;
 dbms_output.put_line (v_job_title||' '||v_emp_id);
 close c_jobs;
 end;
+--------------------cursor-----------------------------------
+declare 
+cursor c_m is select departments.department_name, (employees.first_name||' '||employees.last_name) as manager_name
+from DEPARTMENTS , employees  where departments.department_id = employees.department_id and departments.manager_id = employees.employee_id;
+v_name employees.first_name%type;
+v_department departments.department_name%type;
+begin
+open c_m;
+fetch c_m into v_department,v_name; 
+dbms_output.put_line(v_department||' '||v_name);
+close c_m;
+end;
