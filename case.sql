@@ -83,3 +83,20 @@ fetch c_m into v_department,v_name;
 dbms_output.put_line(v_department||' '||v_name);
 close c_m;
 end;
+------------cursor+record--------------------------
+
+declare 
+--v_emp employees%rowtype;
+cursor c_m is select departments.department_name, (employees.first_name||' '||employees.last_name) manager_name
+from DEPARTMENTS , employees  where departments.department_id = employees.department_id and departments.manager_id = employees.employee_id;
+v_emp c_m%rowtype;
+--manager_name employees.first_name%type;
+--department_name departments.department_name%type;
+begin
+open c_m;
+fetch c_m into v_emp.department_name,v_emp.manager_name; 
+--department_name := v_emp.first_name;
+--manager_name := v_emp.last_name;
+dbms_output.put_line (v_emp.department_name||' '||v_emp.manager_name);
+close c_m;
+end;
