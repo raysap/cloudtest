@@ -100,3 +100,30 @@ fetch c_m into v_emp.department_name,v_emp.manager_name;
 dbms_output.put_line (v_emp.department_name||' '||v_emp.manager_name);
 close c_m;
 end;
+------------------Cursor with loop ------------------------
+
+set SERVEROUTPUT ON;
+
+DECLARE
+    CURSOR c_m (
+        p_det_id NUMBER
+    ) IS
+    SELECT
+        departments.department_name,
+        ( employees.first_name
+          || ' '
+          || employees.last_name ) manager_name
+    FROM
+        departments,
+        employees
+    WHERE
+        departments.department_id = p_det_id
+        AND departments.manager_id = employees.employee_id;
+
+BEGIN
+    FOR i IN c_m(:b_id) LOOP
+        dbms_output.put_line(i.department_name
+                             || ' '
+                             || i.manager_name);
+    END LOOP;
+END;
