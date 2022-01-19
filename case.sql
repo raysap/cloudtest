@@ -127,3 +127,29 @@ BEGIN
                              || i.manager_name);
     END LOOP;
 END;
+---------cursor+procedure-----------------------
+
+create or replace PROCEDURE department_id (
+        p_det_id NUMBER
+    ) AS
+
+    CURSOR c_m IS
+    SELECT
+        departments.department_name,
+        ( employees.first_name
+          || ' '
+          || employees.last_name ) manager_name
+    FROM
+        departments,
+        employees
+    WHERE
+        departments.department_id = p_det_id
+        AND departments.manager_id = employees.employee_id;
+
+BEGIN
+    FOR i IN c_m LOOP
+        dbms_output.put_line(i.department_name
+                             || ' '
+                             || i.manager_name);
+    END LOOP;
+END;
